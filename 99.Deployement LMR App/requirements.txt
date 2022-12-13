@@ -16,3 +16,4 @@ tqdm==4.64.1
 uvicorn==0.18.3
 wordcloud==1.8.2.2
 PyJWT==2.6.0
+

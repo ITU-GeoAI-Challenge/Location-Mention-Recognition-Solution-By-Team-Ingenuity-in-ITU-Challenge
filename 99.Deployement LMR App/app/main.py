@@ -55,20 +55,100 @@ app=FastAPI()
 @app.get("/")
 async def main():
     content = """
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.button {
+  border: none;
+  color: white;
+  padding: 10px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+.button1 {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #4CAF50;
+}
+
+.button1:hover {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.button2 {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #008CBA;
+}
+
+.button2:hover {
+  background-color: #008CBA;
+  color: white;
+}
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid #e7e7e7;
+  background-color: #f3f3f3;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: #666;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover:not(.active) {
+  background-color: #008CBA;
+}
+
+li a.active {
+  color: white;
+  background-color: #008CBA;
+}
+</style>
 <body>
+
+<ul>
+  <li><a class="active" href="">LMR</a></li>
+  <li></li>
+  <li></li>
+  <li></li>
+</ul>
+<h1 style="text-align:center;">LOCATION MENTION RECOGNITION API</h1>
+<p style="text-align:center;font-size:25px;">A web API using Deep Machine Learning and NLP to recognize Locations mentioned in Tweets with crises</p>
 <pre>
 <p>
 upload your file in this format please : 
 
-{"tweet_id":"YOUR TWEET ID","text":"YOUR TWEET CONTAINS CRISS GOES HERE"}
+{"tweet_id":"YOUR TWEET ID_1","text":"YOUR TWEET_1 CONTAINS CRISS GOES HERE"}
+{"tweet_id":"YOUR TWEET ID_2","text":"YOUR TWEET_2 CONTAINS CRISS GOES HERE"}
+{"tweet_id":"YOUR TWEET ID_2","text":"YOUR TWEET_3 CONTAINS CRISS GOES HERE"}
 
 </p>
 </pre>
-<form action="/" enctype="multipart/form-data" method="post">
-<input name="files" type="file" multiple>
-<input type="submit">
+<form action="/" enctype="multipart/form-data" method="post" style="text-align:center;">
+<input name="files" type="file">
+<input class="button button2" type="submit">
 </form>
 </body>
+</html>
     """
     return HTMLResponse(content=content)
 
@@ -156,10 +236,8 @@ async def main(files: UploadFile=File(...)):
                     with open("app/geoai/output.jsonl", "a") as f:
                         f.writelines(results)
                         f.close()
-                    # outputs = open('app/geoai/output.jsonl','w')
-                    # outputs.write(Model_Results.__str__())
-                    # return Model_Results
-                    return results
+      
+                    return Model_Results
                 
                 else:
                     return {"Error":"no data or tweet id found in the file"}
